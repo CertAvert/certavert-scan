@@ -11,7 +11,7 @@ certavert-scan connects to the machines on your network, reads the certificate e
 - **Runs on your machine. Nothing is sent anywhere.** No account, no key, no upload.
 - **Reads every certificate**, including internal CAs, self-signed and expired ones.
 - **Three files per scan**: an HTML page to read, a CSV for spreadsheets, a JSON file with everything.
-- **Free and open source** (MIT), made by [CertAvert](https://certavert.com).
+- **Free and open source** (MIT), made by [CertAvert](https://certavert.com), on [PyPI](https://pypi.org/project/certavert-scan/).
 
 > Only scan networks you own or are allowed to scan.
 
