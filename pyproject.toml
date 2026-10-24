@@ -1,0 +1,33 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "certavert-scan"
+version = "0.1.0"
+description = "Find the TLS certificates on your network and see when they expire. Nothing leaves your machine."
+readme = "README.md"
+license = { text = "MIT" }
+authors = [{ name = "CertAvert", email = "support@certavert.com" }]
+requires-python = ">=3.9"
+dependencies = ["cryptography>=38", "tomli>=1.1; python_version < '3.11'"]
+keywords = ["ssl", "tls", "certificate", "expiry", "inventory", "scanner"]
+classifiers = [
+    "Environment :: Console",
+    "Intended Audience :: System Administrators",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Topic :: Security",
+    "Topic :: System :: Networking :: Monitoring",
+]
+
+[project.urls]
+Homepage = "https://certavert.com"
+Source = "https://github.com/certavert/certavert-scan"
+
+[project.scripts]
+certavert-scan = "certavert_scan.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]

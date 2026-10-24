@@ -1,0 +1,8 @@
+__pycache__/
+*.egg-info/
+build/
+dist/
+.venv/
+certavert-scan-*.html
+certavert-scan-*.csv
+certavert-scan-*.json
