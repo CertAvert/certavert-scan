@@ -69,23 +69,69 @@ Add your own in the settings file or with `--ports`.
 
 You need **Python 3.9 or newer**. Check with `python3 --version` (Windows: `py --version`). If you don't have it: [python.org/downloads](https://www.python.org/downloads/).
 
-**macOS and Linux**, with [pipx](https://pipx.pypa.io) (keeps the tool separate from your other Python packages):
+Pick your system, then **pipx** (recommended: keeps the tool apart from your other Python packages) or **pip**.
+
+### macOS
+
+With pipx:
 
 ```
+brew install pipx
+pipx ensurepath
 pipx install certavert-scan
 ```
 
-or with pip:
+Open a new terminal after `pipx ensurepath`. No Homebrew? See [brew.sh](https://brew.sh), or use pip.
+
+With pip, in a virtual environment of its own:
 
 ```
-python3 -m pip install --user certavert-scan
+python3 -m venv ~/certavert-scan-venv
+~/certavert-scan-venv/bin/pip install certavert-scan
+~/certavert-scan-venv/bin/certavert-scan --version
 ```
 
-**Windows**, in PowerShell or Command Prompt:
+### Linux
+
+With pipx (Debian, Ubuntu; Fedora: `sudo dnf install pipx`):
+
+```
+sudo apt install pipx
+pipx ensurepath
+pipx install certavert-scan
+```
+
+Open a new terminal after `pipx ensurepath`.
+
+With pip, in a virtual environment of its own:
+
+```
+python3 -m venv ~/certavert-scan-venv
+~/certavert-scan-venv/bin/pip install certavert-scan
+~/certavert-scan-venv/bin/certavert-scan --version
+```
+
+On Debian and Ubuntu, `python3 -m venv` needs `sudo apt install python3-venv` first.
+
+### Windows
+
+In PowerShell or Command Prompt, with pipx:
+
+```
+py -m pip install --user pipx
+py -m pipx ensurepath
+pipx install certavert-scan
+```
+
+Open a new window after `ensurepath`.
+
+With pip:
 
 ```
 py -m pip install certavert-scan
 ```
+
+### After installing
 
 pip also installs [`cryptography`](https://pypi.org/project/cryptography/), which reads the certificates, and on Python 3.9 and 3.10 [`tomli`](https://pypi.org/project/tomli/), which reads the settings file.
 
@@ -95,7 +141,9 @@ Check it works:
 certavert-scan --version
 ```
 
-**Update** with `pipx upgrade certavert-scan` or `pip install --upgrade certavert-scan`. **Remove** with `pipx uninstall certavert-scan` or `pip uninstall certavert-scan`. The tool never updates itself.
+(In a virtual environment: `~/certavert-scan-venv/bin/certavert-scan --version`.)
+
+**Update** with `pipx upgrade certavert-scan`, or `pip install --upgrade certavert-scan` with the same pip you installed it with. **Remove** with `pipx uninstall certavert-scan`, or delete the `~/certavert-scan-venv` folder (Windows: `py -m pip uninstall certavert-scan`). The tool never updates itself.
 
 ## Quick start
 
@@ -478,6 +526,12 @@ The only link between them is a line at the bottom of the HTML page, linking to 
 **`certavert-scan: command not found`** (or "not recognized" on Windows)
 pip installed it in a folder that isn't on your PATH. Use `pipx ensurepath` and open a new terminal, or run it as `python3 -m certavert_scan` (Windows: `py -m certavert_scan`).
 
+**`Failed building wheel for cryptography`** (or `maturin failed`, `cargo`)
+pip found no ready-made build of `cryptography` for your machine and tried to compile it. Update pip (`python3 -m pip install --upgrade pip`) and install again. On an Intel Mac, certavert-scan 0.1.1 and later pick a `cryptography` version that has a build for it; with 0.1.0, run `pip install "cryptography<49"` first. On **Windows on ARM** (Surface, Snapdragon laptops) there is no build for the ARM Python: install the 64-bit (x64) Python from python.org instead; it runs there too.
+
+**`error: externally-managed-environment`**
+Your system's Python doesn't let pip install into it (Homebrew on macOS, Debian 12, Ubuntu 23.04 and later). Use pipx or a virtual environment, as in [Install](#install).
+
 **Found 0 endpoints, but there are servers**
 - A firewall between you and them drops the connections. Scan from inside the same network, or ask for the ports to be opened from the scanning machine.
 - The services are on other ports: add them (`--ports 443,8443,10443`).
@@ -512,7 +566,7 @@ The results folder isn't writable. Choose another with `--output` or `output`.
 {
   "format": "certavert-scan",
   "format_version": 1,
-  "tool_version": "0.1.0",
+  "tool_version": "0.1.2",
   "scan": {
     "started_at": "2026-10-23T14:15:02Z",
     "finished_at": "2026-10-23T14:16:40Z",

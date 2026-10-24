@@ -4,13 +4,18 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "certavert-scan"
-version = "0.1.0"
+version = "0.1.2"
 description = "Find the TLS certificates on your network and see when they expire. Nothing leaves your machine."
 readme = "README.md"
 license = { text = "MIT" }
 authors = [{ name = "CertAvert", email = "support@certavert.com" }]
 requires-python = ">=3.9"
-dependencies = ["cryptography>=38", "tomli>=1.1; python_version < '3.11'"]
+dependencies = [
+    "cryptography>=38; sys_platform != 'darwin' or platform_machine != 'x86_64'",
+    # cryptography 49 and later ship no build for Intel Macs, so pip would have to compile it (needs Rust)
+    "cryptography>=38,<49; sys_platform == 'darwin' and platform_machine == 'x86_64'",
+    "tomli>=1.1; python_version < '3.11'",
+]
 keywords = ["ssl", "tls", "certificate", "expiry", "inventory", "scanner"]
 classifiers = [
     "Environment :: Console",

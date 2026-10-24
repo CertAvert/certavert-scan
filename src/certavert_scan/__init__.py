@@ -13,7 +13,7 @@ Nothing in this package sends data anywhere: it only connects to the
 addresses being scanned (and DNS), and writes files on this machine.
 """
 
-__version__ = "0.1.0"
+__version__ = "0.1.2"
 
 # The JSON file's format. Bump when a field changes meaning or goes away;
 # adding fields keeps the version.
