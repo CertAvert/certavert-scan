@@ -40,11 +40,6 @@ Only scan networks you own or are allowed to scan.
 """
 
 
-# ---------------------------------------------------------------------------
-# Options
-# ---------------------------------------------------------------------------
-
-
 def build_parser() -> argparse.ArgumentParser:
     """The command line options.
 
@@ -77,11 +72,6 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("-q", "--quiet", action="store_true", help="no progress, only errors")
     parser.add_argument("-V", "--version", action="version", version=f"%(prog)s {__version__}")
     return parser
-
-
-# ---------------------------------------------------------------------------
-# Scanning
-# ---------------------------------------------------------------------------
 
 
 class Progress:
@@ -143,11 +133,6 @@ def run_scan(
     return results
 
 
-# ---------------------------------------------------------------------------
-# First run and messages
-# ---------------------------------------------------------------------------
-
-
 def _fail(message: str) -> int:
     """Print an error and return exit code 2 (wrong input; nothing was scanned)."""
     print(f"certavert-scan: {message}", file=sys.stderr)
@@ -190,11 +175,6 @@ def _first_run(args: argparse.Namespace, path: str) -> Optional[dict[str, Any]]:
         return settings
     print("Change the file if you need to, then run certavert-scan again.", file=sys.stderr)
     return None
-
-
-# ---------------------------------------------------------------------------
-# The run
-# ---------------------------------------------------------------------------
 
 
 def main(argv: Optional[list[str]] = None) -> int:

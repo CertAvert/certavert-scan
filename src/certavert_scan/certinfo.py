@@ -28,11 +28,6 @@ MAX_SANS = 200
 CURVES = {"secp256r1": "P-256", "secp384r1": "P-384", "secp521r1": "P-521"}
 
 
-# ---------------------------------------------------------------------------
-# Field helpers
-# ---------------------------------------------------------------------------
-
-
 def _utc(cert: x509.Certificate, field: str) -> datetime:
     """A certificate date in UTC. cryptography 42 added the *_utc properties and
     deprecated the naive ones; this works with both old and new versions."""
@@ -105,11 +100,6 @@ def _is_ca(cert: x509.Certificate) -> bool:
         return False
 
 
-# ---------------------------------------------------------------------------
-# Names and dates
-# ---------------------------------------------------------------------------
-
-
 def name_covers(pattern: str, name: str) -> bool:
     """Exact match, or a wildcard for exactly one leftmost label ("*.example.com")."""
     pattern, name = pattern.lower().rstrip("."), name.lower().rstrip(".")
@@ -136,11 +126,6 @@ def covers(sans: list[str], common_name: Optional[str], name: str) -> bool:
 def days_left(not_after: datetime, now: datetime) -> int:
     """Whole days, rounded down, like CertAvert (negative once expired)."""
     return math.floor((not_after - now).total_seconds() / 86400)
-
-
-# ---------------------------------------------------------------------------
-# The whole certificate
-# ---------------------------------------------------------------------------
 
 
 def describe(der: bytes, now: Optional[datetime] = None) -> dict[str, Any]:

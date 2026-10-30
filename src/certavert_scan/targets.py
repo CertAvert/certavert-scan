@@ -19,9 +19,6 @@ import socket
 from dataclasses import dataclass
 from typing import Iterable, Iterator, Optional, Union
 
-# ---------------------------------------------------------------------------
-# Defaults
-# ---------------------------------------------------------------------------
 
 # Ports where the server speaks TLS from the first byte (no STARTTLS):
 # 443 HTTPS, 465 SMTPS, 636 LDAPS, 990 FTPS, 993 IMAPS, 995 POP3S,
@@ -37,11 +34,6 @@ Network = Union[ipaddress.IPv4Network, ipaddress.IPv6Network]
 
 class TargetError(ValueError):
     """A target, port or exclude the user wrote can't be understood. The message says which."""
-
-
-# ---------------------------------------------------------------------------
-# Data types
-# ---------------------------------------------------------------------------
 
 
 @dataclass(frozen=True)
@@ -77,11 +69,6 @@ class Target:
         if self.network.num_addresses <= 2:
             return self.network.num_addresses
         return self.network.num_addresses - 2 if self.network.version == 4 else self.network.num_addresses - 1
-
-
-# ---------------------------------------------------------------------------
-# Reading what the user wrote
-# ---------------------------------------------------------------------------
 
 
 def parse_ports(text: str) -> tuple[int, ...]:
@@ -192,11 +179,6 @@ def is_excluded(address: str, excludes: list[Network]) -> bool:
     """True if the address is in one of the excluded networks."""
     ip = ipaddress.ip_address(address)
     return any(ip.version == net.version and ip in net for net in excludes)
-
-
-# ---------------------------------------------------------------------------
-# From targets to endpoints
-# ---------------------------------------------------------------------------
 
 
 def resolve(name: str) -> Optional[str]:

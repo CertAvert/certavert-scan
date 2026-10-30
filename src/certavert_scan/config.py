@@ -30,9 +30,6 @@ from certavert_scan import targets
 
 FILE_NAME = "certavert-scan.toml"
 
-# ---------------------------------------------------------------------------
-# Settings and their defaults
-# ---------------------------------------------------------------------------
 
 # Used for anything the file doesn't set.
 DEFAULTS: dict[str, Any] = {
@@ -82,11 +79,6 @@ class ConfigError(ValueError):
     """The settings file can't be read or has a wrong setting. The message names the file."""
 
 
-# ---------------------------------------------------------------------------
-# Finding and reading the file
-# ---------------------------------------------------------------------------
-
-
 def user_config_path() -> str:
     """The user's own settings file, whether it exists or not."""
     if sys.platform == "win32":
@@ -133,11 +125,6 @@ def load(path: str) -> dict[str, Any]:
     if settings["output"]:
         settings["output"] = os.path.expanduser(settings["output"])
     return settings
-
-
-# ---------------------------------------------------------------------------
-# The first settings file
-# ---------------------------------------------------------------------------
 
 
 def default_output() -> str:

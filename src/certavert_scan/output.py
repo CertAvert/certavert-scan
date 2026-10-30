@@ -21,9 +21,6 @@ from typing import Any
 
 from certavert_scan import FORMAT_VERSION, __version__
 
-# ---------------------------------------------------------------------------
-# The document all three files are built from
-# ---------------------------------------------------------------------------
 
 # Sort order: what needs attention first.
 STATUS_ORDER = {"Expired": 0, "Error": 1, "Not yet valid": 2, "Expiring": 3, "OK": 4}
@@ -97,11 +94,6 @@ def document(results: list[dict[str, Any]], scan: dict[str, Any]) -> dict[str, A
     }
 
 
-# ---------------------------------------------------------------------------
-# JSON and CSV
-# ---------------------------------------------------------------------------
-
-
 def to_json(doc: dict[str, Any]) -> str:
     return json.dumps(doc, indent=2, ensure_ascii=False) + "\n"
 
@@ -156,11 +148,6 @@ def to_csv(doc: dict[str, Any]) -> str:
         writer.writerow([_cell(v) for v in row])
     # UTF-8 with BOM so Excel reads names with accents correctly.
     return "﻿" + buffer.getvalue()
-
-
-# ---------------------------------------------------------------------------
-# HTML page
-# ---------------------------------------------------------------------------
 
 
 def _short_date(iso: str | None) -> str:

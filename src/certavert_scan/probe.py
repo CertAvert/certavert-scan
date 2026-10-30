@@ -29,11 +29,6 @@ from certavert_scan.targets import Endpoint
 OLD_TLS = {"SSLv3", "TLSv1", "TLSv1.1"}
 
 
-# ---------------------------------------------------------------------------
-# Connection helpers
-# ---------------------------------------------------------------------------
-
-
 def _context() -> ssl.SSLContext:
     """A TLS client that accepts any certificate and the oldest protocols Python allows."""
     ctx = ssl.SSLContext(ssl.PROTOCOL_TLS_CLIENT)
@@ -177,11 +172,6 @@ def probe(
     result["status"] = status(cert, expiring_days)
     result["issues"] = issues(cert, endpoint.name, result["tls_version"])
     return result
-
-
-# ---------------------------------------------------------------------------
-# What the results say
-# ---------------------------------------------------------------------------
 
 
 def status(cert: dict[str, Any], expiring_days: int) -> str:
